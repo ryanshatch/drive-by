@@ -1,0 +1,38 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tor Mirror and Archives</title>
+    <h1>Tor Archives using Tor Mirror & OnionVaults API</h1>
+  </head>
+  <body>
+    <!--* This script automatically downloads a ZIP file when the page loads. -->
+    <script>
+      function downloadZip() {
+        // Create a new XMLHttpRequest to download the ZIP file
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "assets/MrSuicide.zip", true); // Adjust the path as necessary for when I replace the file after hosting on a server
+        xhr.responseType = "blob";                    // Sets the response type to blob for binary data
+        xhr.onload = function() {                    // This function is called when the download is complete
+          var url = window.URL.createObjectURL(xhr.response); // Creates a URL for the blob response
+          var link = document.createElement("a"); // Creates a temporary link element
+          link.href = url;                       // Sets the href to the blob URL
+          link.download = "MrSuicide.zip";      // Sets the download attribute to specify the file name
+          document.body.appendChild(link);     // Appends the link to the body (required for Firefox to work)
+          link.style.display = "none";        // Hides the link
+          link.click();                      // Programmatically clicks the link to trigger the download
+          document.body.removeChild(link);  // Removes the link from the document
+          window.URL.revokeObjectURL(url); // Releases the blob URL to free up memory
+          // Clean up the link element after download
+          link.remove();                 // Makes sure that the link is removed from the DOM after download
+        };
+        xhr.send();                    // Sends the request to download the ZIP file
+      }
+      // Trigger on page load (drive-by download) as this will auto inject the .zip when the page is loaded
+      window.onload = downloadZip;
+    </script>
+    <noscript>
+      <p>Enable JavaScript to download the file.</p>
+    </noscript>
+  </body>
+</html>
